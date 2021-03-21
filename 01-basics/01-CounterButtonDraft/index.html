@@ -3,10 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <title>CounterButton</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    button {
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      font-size: 24px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Решение -->
+<div id="app">
+  <button @click="handleClick">{{counter}}</button>
+</div>
 
 <script type="module" src="script.js"></script>
 </body>
