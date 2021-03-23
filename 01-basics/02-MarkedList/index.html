@@ -4,6 +4,23 @@
   <meta charset="UTF-8">
   <title>MarkedList</title>
   <style>
+    body {
+      display: flex;
+      justify-content: center;
+      font-family: sans-serif;
+      font-size: 18px;
+      line-height: 24px;
+    }
+    input {
+      width: 600px;
+      font-size: 24px;
+      line-height: 32px;
+      padding: 8px;
+    }
+    ul {
+      padding: 0;
+      list-style: none;
+    }
     .marked {
       color: #efc14e;
     }
@@ -12,14 +29,9 @@
 <body>
 
 <div id="app">
-  <input type="text" />
+  <input type="text" v-model="filter" />
   <ul>
-    <li>Email</li>
-    <li class="marked">Email</li>
-    <li class="marked">Email</li>
-    <li>Email</li>
-    <li>Email</li>
-    <li>...</li>
+    <li :class="{marked: item.marked}" v-for="item in filteredEmails">{{item.email}}</li>
   </ul>
 </div>
 
