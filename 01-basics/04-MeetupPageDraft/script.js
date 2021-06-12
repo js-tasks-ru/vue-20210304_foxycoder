@@ -44,4 +44,68 @@ const getAgendaItemIcons = () => ({
   other: 'cal-sm',
 });
 
-new Vue();
+new Vue({
+  el: '#app',
+
+  data() {
+    return {
+      loading: false,
+      meetup: null,
+      meetupId: MEETUP_ID,
+      apiUrl: API_URL,
+    };
+  },
+
+  created() {
+    this.getMeetupInfo(this.meetupId);
+  },
+
+  methods: {
+    getMeetupInfo(id) {
+      this.loading = true;
+      fetch(`${this.apiUrl}/meetups/${id}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          this.loading = false;
+          this.meetup = data;
+        })
+        .catch((error) => {
+          this.loading = false;
+          console.log(error);
+        });
+    },
+
+    getAgendaItemIcons() {
+      return getAgendaItemIcons();
+    },
+
+    getImageUrlByImageId(imageId) {
+      return getImageUrlByImageId(imageId);
+    },
+
+    getAgendaItemDefaultTitles() {
+      return getAgendaItemDefaultTitles();
+    },
+
+    getAgendaTitle(item) {
+      if (!item) {
+        return '';
+      }
+      let title = this.getAgendaItemDefaultTitles()[item.type];
+      if (item.type === 'talk') {
+        return `${title} "${item.title}"`;
+      }
+      return title;
+    },
+
+    getAgendaIcon(item) {
+      if (!item) {
+        return '';
+      }
+      let icon = this.getAgendaItemIcons()[item.type] || 'cal-sm';
+      return `/assets/icons/icon-${icon}.svg`;
+    },
+  },
+});
