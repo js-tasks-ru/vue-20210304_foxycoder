@@ -88,24 +88,19 @@ new Vue({
     getAgendaItemDefaultTitles() {
       return getAgendaItemDefaultTitles();
     },
+  },
 
-    getAgendaTitle(item) {
-      if (!item) {
-        return '';
-      }
-      let title = this.getAgendaItemDefaultTitles()[item.type];
-      if (item.type === 'talk') {
-        return `${title} "${item.title}"`;
-      }
-      return title;
-    },
-
-    getAgendaIcon(item) {
-      if (!item) {
-        return '';
-      }
-      let icon = this.getAgendaItemIcons()[item.type] || 'cal-sm';
-      return `/assets/icons/icon-${icon}.svg`;
+  filters: {
+    localDate: function(value) {
+      if (!value) return '';
+      const date = new Date(value);
+      const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timezone: 'UTC',
+      };
+      return date.toLocaleDateString("ru-RU", options);
     },
   },
 });
