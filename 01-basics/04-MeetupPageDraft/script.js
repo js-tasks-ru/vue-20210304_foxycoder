@@ -44,4 +44,63 @@ const getAgendaItemIcons = () => ({
   other: 'cal-sm',
 });
 
-new Vue();
+new Vue({
+  el: '#app',
+
+  data() {
+    return {
+      loading: false,
+      meetup: null,
+      meetupId: MEETUP_ID,
+      apiUrl: API_URL,
+    };
+  },
+
+  created() {
+    this.getMeetupInfo(this.meetupId);
+  },
+
+  methods: {
+    getMeetupInfo(id) {
+      this.loading = true;
+      fetch(`${this.apiUrl}/meetups/${id}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          this.loading = false;
+          this.meetup = data;
+        })
+        .catch((error) => {
+          this.loading = false;
+          console.log(error);
+        });
+    },
+
+    getAgendaItemIcons() {
+      return getAgendaItemIcons();
+    },
+
+    getImageUrlByImageId(imageId) {
+      return getImageUrlByImageId(imageId);
+    },
+
+    getAgendaItemDefaultTitles() {
+      return getAgendaItemDefaultTitles();
+    },
+  },
+
+  filters: {
+    localDate: function(value) {
+      if (!value) return '';
+      const date = new Date(value);
+      const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timezone: 'UTC',
+      };
+      return date.toLocaleDateString("ru-RU", options);
+    },
+  },
+});
